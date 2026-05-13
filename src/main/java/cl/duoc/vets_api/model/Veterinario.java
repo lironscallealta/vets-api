@@ -7,6 +7,7 @@
 package cl.duoc.vets_api.model;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -40,5 +41,5 @@ public class Veterinario {
 
     @ManyToMany
     @JoinColumn(nullable = false, name = "id_horario")
-    private Horario horario; // cuando trabaja cada veterinario
+    private List<Horario> horario; // cuando trabaja cada veterinario
 }
