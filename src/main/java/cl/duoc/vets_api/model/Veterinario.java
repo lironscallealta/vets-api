@@ -41,10 +41,9 @@ public class Veterinario {
     private Boolean Escirujano;
 
     @ManyToMany
-    @JoinTable(
-        name = "veterinarios_horarios",
-        joinColumns = @JoinColumn(name = "veterinario_id"),
-        inverseJoinColumns = @JoinColumn(name = "horario_id")
-    )
+    @JoinTable(name = "veterinarios_horarios", joinColumns = @JoinColumn(name = "veterinario_id"), inverseJoinColumns = @JoinColumn(name = "horario_id"))
     private List<Horario> horario; // cuando trabaja cada veterinario
+
+    // esa fue la forma que encontre para hacer la tabla intermedia cuando es muchos
+    // a muchos
 }
