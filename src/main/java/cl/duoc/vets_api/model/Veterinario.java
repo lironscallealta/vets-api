@@ -34,15 +34,15 @@ public class Veterinario {
     @Column(length = 12, nullable = false, unique = true, name = "numero_profesional")
     private String numeroRegistroProfesional;
 
-    @Column(name = "annio_egreso")
+    @Column(name = "egreso_profesional")
     private LocalDate egresoProfesional;
 
-    @Column(name = "cirujano")
-    private Boolean Escirujano;
+    @Column(name = "es_cirujano")
+    private Boolean esCirujano;
 
     @ManyToMany
     @JoinTable(name = "veterinarios_horarios", joinColumns = @JoinColumn(name = "veterinario_id"), inverseJoinColumns = @JoinColumn(name = "horario_id"))
-    private List<Horario> horario; // cuando trabaja cada veterinario
+    private List<Horario> horarios; // cuando trabaja cada veterinario
 
     // esa fue la forma que encontre para hacer la tabla intermedia cuando es muchos
     // a muchos
