@@ -15,6 +15,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -40,6 +41,10 @@ public class Veterinario {
     private Boolean Escirujano;
 
     @ManyToMany
-    @JoinColumn(nullable = false, name = "id_horario")
+    @JoinTable(
+        name = "veterinarios_horarios",
+        joinColumns = @JoinColumn(name = "veterinario_id"),
+        inverseJoinColumns = @JoinColumn(name = "horario_id")
+    )
     private List<Horario> horario; // cuando trabaja cada veterinario
 }

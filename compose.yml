@@ -1,5 +1,5 @@
 services:
-  db:
+  db_vets:
     image: mysql:lts
     ports:
       - ${HOST_DB_PORT:-3308}:3306
@@ -22,12 +22,12 @@ services:
     env_file:
       - .env
     environment:
-      PMA_HOST: db
+      PMA_HOST: db_vets
       PMA_PORT: 3306
     networks:
       - fullstack_default
     depends_on:
-      - db
+      - db_vets
 
 volumes:
   mysql_vets_data:
