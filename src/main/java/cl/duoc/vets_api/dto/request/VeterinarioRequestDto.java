@@ -17,17 +17,16 @@ import lombok.NoArgsConstructor;
 public class VeterinarioRequestDto {
 
     @NotBlank
-    @Size(max = 50)
+
     private String nombre;
 
-    @Size(max = 50)
+    @NotBlank
     private String segundoNombre;
 
     @NotBlank
-    @Size(max = 50)
     private String apellido;
 
-    @Size(max = 50)
+    @NotBlank
     private String segundoApellido;
 
     @NotBlank
@@ -35,14 +34,14 @@ public class VeterinarioRequestDto {
     private String rut;
 
     @NotBlank
-    @Size(max = 1)
+    @Size(min = 1, max = 1)
     private String dv;
 
     @NotBlank
     @Email
-    @Size(max = 50)
     private String email;
 
+    @NotBlank
     @Size(max = 20)
     private String telefonoCelular;
 
@@ -55,6 +54,7 @@ public class VeterinarioRequestDto {
     private String numeroRegistroProfesional;
 
     @Past
+    @NotNull
     private LocalDate egresoProfesional;
 
     @NotNull

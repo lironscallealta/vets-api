@@ -27,16 +27,16 @@ public class Veterinario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false)
     private String nombre;
 
-    @Column(length = 50, name = "segundo_nombre")
+    @Column(name = "segundo_nombre")
     private String segundoNombre;
 
-    @Column(length = 50, name = "appaterno")
+    @Column(name = "appaterno")
     private String apellido;
 
-    @Column(length = 50, name = "apmaterno")
+    @Column(name = "apmaterno")
     private String segundoApellido;
 
     @Column(length = 22)
@@ -45,7 +45,7 @@ public class Veterinario {
     @Column(length = 1)
     private String dv;
 
-    @Column(length = 50, nullable = false, unique = true)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(length = 20)
