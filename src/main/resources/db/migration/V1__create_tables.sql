@@ -1,7 +1,9 @@
 -- 1. Tabla Turnos
 CREATE TABLE turnos (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    horario_turno VARCHAR(12) NOT NULL
+    horario_turno VARCHAR(12) NOT NULL,
+    hora_inicio TIME,
+    hora_fin TIME
 );
 
 -- 2. Tabla Horarios

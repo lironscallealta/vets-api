@@ -46,6 +46,8 @@ public class VeterinarioService {
                 if (horario.getTurno() != null) {
                     turnoResponse.setId(horario.getTurno().getId());
                     turnoResponse.setHorarioTurno(horario.getTurno().getHorarioTurno());
+                    turnoResponse.setHoraInicio(horario.getTurno().getHoraInicio());
+                    turnoResponse.setHoraFin(horario.getTurno().getHoraFin());
                 }
 
                 // Mapeo del Horario

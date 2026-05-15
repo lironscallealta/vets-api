@@ -1,9 +1,9 @@
 -- Insertar Turnos iniciales
-INSERT INTO turnos (horario_turno) VALUES
-('MAÑANA'), -- 1
-('TARDE'), -- 2
-('NOCHE'), -- 3
-('MADRUGADA'); -- 4
+INSERT INTO turnos (horario_turno, hora_inicio, hora_fin) VALUES
+('MAÑANA', '08:00:00', '14:00:00'), -- 1
+('TARDE', '14:00:00', '20:00:00'), -- 2
+('NOCHE', '20:00:00', '02:00:00'), -- 3
+('MADRUGADA', '02:00:00', '08:00:00'); -- 4
 
 -- Insertar Horarios de ejemplo
 -- Asumiremos que el turno 1 es MAÑANA, 2 es TARDE, 3 es NOCHE, 4 es MADRUGADA
