@@ -128,4 +128,16 @@ public class VeterinarioService {
 
     }
 
+    public VeterinarioResponseDto actualizarVeterinario() {
+
+        return null;
+
+    }
+
+    public VeterinarioResponseDto eliminarVeterinario() {
+
+        return null;
+
+    }
+
 }
