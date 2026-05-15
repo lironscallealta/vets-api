@@ -54,7 +54,6 @@ public class VeterinarioRequestDto {
     private String numeroRegistroProfesional;
 
     @Past
-    @NotNull
     private LocalDate egresoProfesional;
 
     @NotNull
