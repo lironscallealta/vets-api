@@ -2,9 +2,11 @@ package cl.duoc.vets_api.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import cl.duoc.vets_api.dto.request.VeterinarioRequestDto;
 import cl.duoc.vets_api.dto.response.HorarioResponseDto;
 import cl.duoc.vets_api.dto.response.TurnoResponseDto;
 import cl.duoc.vets_api.dto.response.VeterinarioResponseDto;
@@ -23,7 +25,7 @@ public class VeterinarioService {
     private final HorarioRepository horarioRepository;
     private final TurnoRepository turnoRepository;
 
-    public VeterinarioResponseDto MapToVeterinaroToVeterinarioResponse(Veterinario veterinarioModel) {
+    private VeterinarioResponseDto mapToVeterinaroToVeterinarioResponse(Veterinario veterinarioModel) {
 
         VeterinarioResponseDto veterinarioResponse = new VeterinarioResponseDto();
 
@@ -51,10 +53,10 @@ public class VeterinarioService {
                 horarioResponse.setId(horario.getId());
                 horarioResponse.setDia(horario.getDia());
 
-                // Asocia turno a horario
+                // asocio turno a horario
                 horarioResponse.setTurno(turnoResponse);
 
-                // Agregamos el horario lista final
+                // agrego lista final
                 listaDeHorariosDto.add(horarioResponse);
             }
         }
@@ -63,4 +65,67 @@ public class VeterinarioService {
 
         return veterinarioResponse;
     }
+
+    public VeterinarioResponseDto registrarVeterinario(VeterinarioRequestDto veterinarioRequest) {
+
+        Veterinario veterinarioModel = new Veterinario();
+
+        List<Horario> horarios = horarioRepository.findAllById(veterinarioRequest.getIdHorarios());
+
+        if (horarios.isEmpty()) {
+
+            throw new RuntimeException("Error al crear veterinario, no se encontraron horarios");
+
+        }
+
+        veterinarioModel.setEsCirujano(veterinarioRequest.getEscirujano());
+        veterinarioModel.setEgresoProfesional(veterinarioRequest.getEgresoProfesional());
+        veterinarioModel.setNumeroRegistroProfesional(veterinarioRequest.getNumeroRegistroProfesional());
+        veterinarioModel.setHorarios(horarios);
+        veterinarioModel.setEsCirujano(veterinarioRequest.getEscirujano());
+
+        VeterinarioResponseDto response = mapToVeterinaroToVeterinarioResponse(veterinarioModel);
+
+        return response;
+
+    }
+
+    public VeterinarioResponseDto ConsultarVeterinarioId(Long veterinarioidId) {
+
+        Optional<Veterinario> veterinario = veterinarioRepository.findById(veterinarioidId);
+
+        if (veterinario.isEmpty()) {
+
+            throw new RuntimeException("Error al buscar veterinario, no se encontro");
+
+        }
+
+        VeterinarioResponseDto response = mapToVeterinaroToVeterinarioResponse(veterinario.get());
+
+        return response;
+
+    }
+
+    public List<VeterinarioResponseDto> ConsultarVeterinarios() {
+
+        List<Veterinario> veterinarios = veterinarioRepository.findAll();
+        List<VeterinarioResponseDto> responseList = new ArrayList<>();
+
+        if (veterinarios.isEmpty()) {
+
+            throw new RuntimeException("No hay veterinarios registrados");
+
+        }
+
+        for (Veterinario veterinario : veterinarios) {
+
+            VeterinarioResponseDto response = mapToVeterinaroToVeterinarioResponse(veterinario);
+            responseList.add(response);
+
+        }
+
+        return responseList;
+
+    }
+
 }

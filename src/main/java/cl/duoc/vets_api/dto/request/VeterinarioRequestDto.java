@@ -7,7 +7,12 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
+@Data
+@NotBlank
+@AllArgsConstructor
 public class VeterinarioRequestDto {
 
     @NotBlank
@@ -18,7 +23,7 @@ public class VeterinarioRequestDto {
     private LocalDate egresoProfesional;
 
     @NotNull
-    private Boolean Escirujano;
+    private Boolean escirujano;
 
     @NotNull
     private List<Long> idHorarios; // cuando trabaja cada veterinario
