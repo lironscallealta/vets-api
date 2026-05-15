@@ -2,6 +2,7 @@
 
 # Compiled class file
 *.class
+*.jpeg
 
 # Log file
 *.log
