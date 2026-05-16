@@ -25,6 +25,11 @@ public class VeterinarioResponseDto {
     private String numeroRegistroProfesional;
     private LocalDate egresoProfesional;
     private Boolean escirujano;
-    private List<HorarioResponseDto> horario;
+    private List<HorarioResponseDto> horarioVeterinario;
+
+    public void setHorario(List<HorarioResponseDto> horarioVeterinarioLista) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setHorario'");
+    }
 
 }

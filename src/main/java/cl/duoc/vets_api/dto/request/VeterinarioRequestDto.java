@@ -61,7 +61,6 @@ public class VeterinarioRequestDto {
     private Boolean escirujano;
 
     @NotNull
-    private List<Long> horario;
-
+    private List<Long> horarioVeterinario;
 
 }

@@ -20,17 +20,26 @@ public class VeterinarioService {
     private final VeterinarioRepository veterinarioRepository;
     private final HorarioRepository horarioRepository;
 
-    private VeterinarioResponseDto mapToVeterinaroToVeterinarioResponse(Veterinario veterinarioModel) {
+    private VeterinarioResponseDto mapToVeterinaroToVeterinarioResponse(Veterinario veterinarioModel) { // me demore
+                                                                                                        // como 100 años
+                                                                                                        // en esto
 
         VeterinarioResponseDto veterinarioResponse = new VeterinarioResponseDto();
-        HorarioResponseDto horarioResponse = new HorarioResponseDto();
 
-       
+        List<HorarioResponseDto> horarioVeterinarioLista = new ArrayList<>();
 
-        List<HorarioResponseDto> horariosvetList = new ArrayList<>(); 
+        for (Horario horario : veterinarioModel.getHorarioVeterinario()) {
 
+            HorarioResponseDto horarioResponse = new HorarioResponseDto();
 
-        List<Horario> horariosBaseDeDatos = horarioRepository.findAll();
+            horarioResponse.setId(horario.getId());
+            horarioResponse.setDuracionTurno(horario.getDuracionTurno());
+            horarioResponse.setHoraInicio(horario.getHoraInicio());
+            horarioResponse.setHoraFin(horario.getHoraFin());
+
+            horarioVeterinarioLista.add(horarioResponse);
+
+        }
 
         veterinarioResponse.setId(veterinarioModel.getId());
         veterinarioResponse.setNombre(veterinarioModel.getNombre());
@@ -45,22 +54,10 @@ public class VeterinarioService {
         veterinarioResponse.setNumeroRegistroProfesional(veterinarioModel.getNumeroRegistroProfesional());
         veterinarioResponse.setEgresoProfesional(veterinarioModel.getEgresoProfesional());
         veterinarioResponse.setEscirujano(veterinarioModel.getEsCirujano());
-        //veterinarioResponse.setHorario(veterinarioModel.getHorario().getId();
 
+        veterinarioResponse.setHorario(horarioVeterinarioLista);
 
-
-
-        
-
-        /*
-         * private Long id;
-         * private DiasSemana dia;
-         * private LocalTime horaInicio;
-         * private LocalTime horaFin;
-         * private Integer duracionTurno;
-         */
-
-        return null;
+        return veterinarioResponse;
     }
 
     public VeterinarioResponseDto registrarVeterinario(VeterinarioRequestDto veterinarioRequest) {
