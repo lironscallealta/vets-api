@@ -9,8 +9,6 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,8 +16,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "disponibilidades")
-public class Disponibilidad {
+@Entity(name = "horarios")
+public class Horario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,7 +35,5 @@ public class Disponibilidad {
     @Column(nullable = false)
     private Integer duracionTurno;
 
-    @ManyToOne
-    @JoinColumn(name = "veterinario_id")
-    private Veterinario veterinario;
+
 }

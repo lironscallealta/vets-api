@@ -1,57 +1,66 @@
 package cl.duoc.vets_api.service;
 
-import org.springframework.stereotype.Service;
-import cl.duoc.vets_api.dto.request.VeterinarioRequestDto;
-import cl.duoc.vets_api.dto.response.VeterinarioResponseDto;
-import cl.duoc.vets_api.model.Disponibilidad;
-import cl.duoc.vets_api.model.Veterinario;
-import cl.duoc.vets_api.repository.VeterinarioRepository;
-import lombok.RequiredArgsConstructor;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.stereotype.Service;
+import cl.duoc.vets_api.dto.request.VeterinarioRequestDto;
+import cl.duoc.vets_api.dto.response.HorarioResponseDto;
+import cl.duoc.vets_api.dto.response.VeterinarioResponseDto;
+import cl.duoc.vets_api.model.Horario;
+import cl.duoc.vets_api.model.Veterinario;
+import cl.duoc.vets_api.repository.HorarioRepository;
+import cl.duoc.vets_api.repository.VeterinarioRepository;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class VeterinarioService {
 
     private final VeterinarioRepository veterinarioRepository;
+    private final HorarioRepository horarioRepository;
 
-    private VeterinarioResponseDto mapToVeterinaroToVeterinarioResponse(Veterinario veterinarioModel, List<Disponibilidad> horariosModel) {
+    private VeterinarioResponseDto mapToVeterinaroToVeterinarioResponse(Veterinario veterinarioModel) {
 
-        VeterinarioResponseDto vetResponse = new VeterinarioResponseDto();
-        vetResponse.setId(veterinarioModel.getId());
-        vetResponse.setNombre(veterinarioModel.getNombre());
-        vetResponse.setSegundoNombre(veterinarioModel.getSegundoNombre());
-        vetResponse.setApellido(veterinarioModel.getApellido());
-        vetResponse.setSegundoApellido(veterinarioModel.getSegundoApellido());
-        vetResponse.setRut(veterinarioModel.getRut());
-        vetResponse.setDv(veterinarioModel.getDv());
-        vetResponse.setEmail(veterinarioModel.getEmail());
-        vetResponse.setTelefonoCelular(veterinarioModel.getTelefonoCelular());
-        vetResponse.setFechaNacimiento(veterinarioModel.getFechaNacimiento());
-        vetResponse.setNumeroRegistroProfesional(veterinarioModel.getNumeroRegistroProfesional());
-        vetResponse.setEgresoProfesional(veterinarioModel.getEgresoProfesional());
-        vetResponse.setEscirujano(veterinarioModel.getEscirujano());
+        VeterinarioResponseDto veterinarioResponse = new VeterinarioResponseDto();
+        HorarioResponseDto horarioResponse = new HorarioResponseDto();
 
-        List<DisponibilidadResponseDto> listaHorariosDto = new ArrayList<>();
+       
+
+        List<HorarioResponseDto> horariosvetList = new ArrayList<>(); 
+
+
+        List<Horario> horariosBaseDeDatos = horarioRepository.findAll();
+
+        veterinarioResponse.setId(veterinarioModel.getId());
+        veterinarioResponse.setNombre(veterinarioModel.getNombre());
+        veterinarioResponse.setSegundoNombre(veterinarioModel.getSegundoNombre());
+        veterinarioResponse.setApellido(veterinarioModel.getApellido());
+        veterinarioResponse.setSegundoApellido(veterinarioModel.getSegundoApellido());
+        veterinarioResponse.setRut(veterinarioModel.getRut());
+        veterinarioResponse.setDv(veterinarioModel.getDv());
+        veterinarioResponse.setEmail(veterinarioModel.getEmail());
+        veterinarioResponse.setTelefonoCelular(veterinarioModel.getTelefonoCelular());
+        veterinarioResponse.setFechaNacimiento(veterinarioModel.getFechaNacimiento());
+        veterinarioResponse.setNumeroRegistroProfesional(veterinarioModel.getNumeroRegistroProfesional());
+        veterinarioResponse.setEgresoProfesional(veterinarioModel.getEgresoProfesional());
+        veterinarioResponse.setEscirujano(veterinarioModel.getEsCirujano());
+        //veterinarioResponse.setHorario(veterinarioModel.getHorario().getId();
+
+
+
+
         
-        if (horariosModel != null) {
-            for (Disponibilidad h : horariosModel) {
-                DisponibilidadResponseDto dispoDto = new DisponibilidadResponseDto();
-                dispoDto.setId(h.getId());
-                dispoDto.setDia(h.getDia());
-                dispoDto.setHoraInicio(h.getHoraInicio());
-                dispoDto.setHoraFin(h.getHoraFin());
-                dispoDto.setDuracionTurno(h.getDuracionTurno());
-                
-                listaHorariosDto.add(dispoDto);
-            }
-        }
 
-        vetResponse.setDisponibilidades(listaHorariosDto);
+        /*
+         * private Long id;
+         * private DiasSemana dia;
+         * private LocalTime horaInicio;
+         * private LocalTime horaFin;
+         * private Integer duracionTurno;
+         */
 
-        return vetResponse;
+        return null;
     }
 
     public VeterinarioResponseDto registrarVeterinario(VeterinarioRequestDto veterinarioRequest) {

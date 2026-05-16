@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DisponibilidadResponseDto {
+public class HorarioResponseDto {
 
     private Long id;
     private DiasSemana dia;

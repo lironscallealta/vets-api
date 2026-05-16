@@ -1,7 +1,9 @@
 package cl.duoc.vets_api.dto.request;
 
 import java.time.LocalDate;
+import java.util.List;
 
+import cl.duoc.vets_api.model.Horario;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -17,7 +19,6 @@ import lombok.NoArgsConstructor;
 public class VeterinarioRequestDto {
 
     @NotBlank
-
     private String nombre;
 
     @NotBlank
@@ -58,4 +59,9 @@ public class VeterinarioRequestDto {
 
     @NotNull
     private Boolean escirujano;
+
+    @NotNull
+    private List<Long> horario;
+
+
 }

@@ -13,6 +13,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -62,5 +65,9 @@ public class Veterinario {
 
     @Column(name = "es_cirujano")
     private Boolean esCirujano;
+
+    @OneToMany
+    @JoinColumn(name = "horario_id")
+    private Horario horario;
 
 }
