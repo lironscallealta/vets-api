@@ -55,12 +55,33 @@ public class VeterinarioService {
         veterinarioResponse.setEgresoProfesional(veterinarioModel.getEgresoProfesional());
         veterinarioResponse.setEscirujano(veterinarioModel.getEsCirujano());
 
-        veterinarioResponse.setHorario(horarioVeterinarioLista);
+        veterinarioResponse.setHorarioVeterinario(horarioVeterinarioLista);
 
         return veterinarioResponse;
     }
 
     public VeterinarioResponseDto registrarVeterinario(VeterinarioRequestDto veterinarioRequest) {
+
+        Veterinario veterinario = new Veterinario();
+
+        VeterinarioResponseDto response = new VeterinarioResponseDto();
+
+        List<Horario> horarios = horarioRepository.findAll();
+        // Trabajando e este
+
+        veterinario.setNombre(veterinarioRequest.getNombre());
+        veterinario.setSegundoNombre(veterinarioRequest.getSegundoNombre());
+        veterinario.setApellido(veterinarioRequest.getApellido());
+        veterinario.setSegundoApellido(veterinarioRequest.getSegundoApellido());
+        veterinario.setRut(veterinarioRequest.getRut());
+        veterinario.setDv(veterinarioRequest.getDv());
+        veterinario.setEmail(veterinarioRequest.getEmail());
+        veterinario.setTelefonoCelular(veterinarioRequest.getTelefonoCelular());
+        veterinario.setFechaNacimiento(veterinarioRequest.getFechaNacimiento());
+        veterinario.setNumeroRegistroProfesional(veterinarioRequest.getNumeroRegistroProfesional());
+        veterinario.setEgresoProfesional(veterinarioRequest.getEgresoProfesional());
+        veterinario.setEsCirujano(veterinarioRequest.getEscirujano());
+        veterinario.setHorarioVeterinario(horarios);
 
         return null;
 

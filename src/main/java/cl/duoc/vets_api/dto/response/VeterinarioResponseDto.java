@@ -27,9 +27,4 @@ public class VeterinarioResponseDto {
     private Boolean escirujano;
     private List<HorarioResponseDto> horarioVeterinario;
 
-    public void setHorario(List<HorarioResponseDto> horarioVeterinarioLista) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setHorario'");
-    }
-
 }
