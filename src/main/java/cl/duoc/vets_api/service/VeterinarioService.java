@@ -66,8 +66,9 @@ public class VeterinarioService {
 
         VeterinarioResponseDto response = new VeterinarioResponseDto();
 
-        List<Horario> horarios = horarioRepository.findAll();
-        // Trabajando e este
+        List<Horario> horarios = horarioRepository.findAllById(veterinarioRequest.getHorarioVeterinario());
+
+        // me falta el error aca
 
         veterinario.setNombre(veterinarioRequest.getNombre());
         veterinario.setSegundoNombre(veterinarioRequest.getSegundoNombre());
@@ -83,7 +84,9 @@ public class VeterinarioService {
         veterinario.setEsCirujano(veterinarioRequest.getEscirujano());
         veterinario.setHorarioVeterinario(horarios);
 
-        return null;
+        response = mapToVeterinaroToVeterinarioResponse(veterinario);
+
+        return response;
 
     }
 
