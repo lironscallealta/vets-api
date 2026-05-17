@@ -22,10 +22,8 @@ public class VeterinarioService {
     private final VeterinarioRepository veterinarioRepository;
     private final HorarioRepository horarioRepository;
 
-    private VeterinarioResponseDto mapToVeterinaroToVeterinarioResponse(Veterinario veterinarioModel) { // me demore
-                                                                                                        // como 100 años
-                                                                                                        // en esto
-
+    private VeterinarioResponseDto mapToVeterinaroToVeterinarioResponse(Veterinario veterinarioModel) { // 100 años para
+                                                                                                        // esta funcion
         VeterinarioResponseDto veterinarioResponse = new VeterinarioResponseDto();
 
         List<HorarioResponseDto> horarioVeterinarioLista = new ArrayList<>();

@@ -1,6 +1,5 @@
 package cl.duoc.vets_api.dto.response;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
