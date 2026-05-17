@@ -32,8 +32,4 @@ public class Horario {
     @Column(nullable = false)
     private LocalTime horaFin;
 
-    @Column(nullable = false)
-    private Integer duracionTurno;
-
-
 }

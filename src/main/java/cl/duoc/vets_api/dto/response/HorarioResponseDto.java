@@ -16,6 +16,5 @@ public class HorarioResponseDto {
     private DiasSemana dia;
     private LocalTime horaInicio;
     private LocalTime horaFin;
-    private Integer duracionTurno;
 
 }

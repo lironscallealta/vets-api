@@ -32,7 +32,6 @@ public class VeterinarioService {
             HorarioResponseDto horarioResponse = new HorarioResponseDto();
 
             horarioResponse.setId(horario.getId());
-            horarioResponse.setDuracionTurno(horario.getDuracionTurno());
             horarioResponse.setHoraInicio(horario.getHoraInicio());
             horarioResponse.setHoraFin(horario.getHoraFin());
 

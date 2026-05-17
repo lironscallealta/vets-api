@@ -3,7 +3,6 @@ package cl.duoc.vets_api.dto.request;
 import java.time.LocalDate;
 import java.util.List;
 
-import cl.duoc.vets_api.model.Horario;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

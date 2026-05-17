@@ -9,7 +9,6 @@ package cl.duoc.vets_api.model;
 import java.time.LocalDate;
 import java.util.List;
 
-import cl.duoc.vets_api.dto.response.HorarioResponseDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,10 +30,10 @@ public class Veterinario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "pnombre")
     private String nombre;
 
-    @Column(name = "segundo_nombre")
+    @Column(name = "snombre")
     private String segundoNombre;
 
     @Column(name = "appaterno")
@@ -58,13 +57,13 @@ public class Veterinario {
     @Column(name = "fecha_nacimiento_vet", nullable = false)
     private LocalDate fechaNacimiento;
 
-    @Column(length = 12, nullable = false, unique = true, name = "registro_veterinario")
+    @Column(length = 12, nullable = false, unique = true, name = "registro_profesional")
     private String numeroRegistroProfesional;
 
-    @Column(name = "fecha_egreso_vet")
+    @Column(name = "egreso_profesional")
     private LocalDate egresoProfesional;
 
-    @Column(name = "es_cirujano")
+    @Column(name = "opera")
     private Boolean puedeOperar;
 
     @OneToMany
