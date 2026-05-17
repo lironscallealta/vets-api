@@ -1,5 +1,8 @@
 package cl.duoc.vets_api.service;
 
+import java.time.LocalDate;
+import java.time.Period;
+
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Service;
@@ -40,18 +43,14 @@ public class VeterinarioService {
         }
 
         veterinarioResponse.setId(veterinarioModel.getId());
-        veterinarioResponse.setNombre(veterinarioModel.getNombre());
-        veterinarioResponse.setSegundoNombre(veterinarioModel.getSegundoNombre());
-        veterinarioResponse.setApellido(veterinarioModel.getApellido());
-        veterinarioResponse.setSegundoApellido(veterinarioModel.getSegundoApellido());
-        veterinarioResponse.setRut(veterinarioModel.getRut());
-        veterinarioResponse.setDv(veterinarioModel.getDv());
+        veterinarioResponse.setNombreCompleto(veterinarioModel.getNombre() + " " + veterinarioModel.getSegundoNombre());
+
+        veterinarioResponse.setApellidos(veterinarioModel.getApellido() + " " + veterinarioModel.getSegundoApellido());
+        veterinarioResponse.setRut(veterinarioModel.getRut() + "-" + veterinarioModel.getDv());
         veterinarioResponse.setEmail(veterinarioModel.getEmail());
-        veterinarioResponse.setTelefonoCelular(veterinarioModel.getTelefonoCelular());
-        veterinarioResponse.setFechaNacimiento(veterinarioModel.getFechaNacimiento());
+        Integer edad = Period.between(veterinarioModel.getFechaNacimiento(), LocalDate.now()).getYears();
+        veterinarioResponse.setEdad(edad);
         veterinarioResponse.setNumeroRegistroProfesional(veterinarioModel.getNumeroRegistroProfesional());
-        veterinarioResponse.setEgresoProfesional(veterinarioModel.getEgresoProfesional());
-        veterinarioResponse.setPuedeOperar(veterinarioModel.getPuedeOperar());
 
         veterinarioResponse.setHorarioVeterinario(horarioVeterinarioLista);
 

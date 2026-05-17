@@ -13,18 +13,28 @@ import lombok.NoArgsConstructor;
 public class VeterinarioResponseDto {
 
     private Long id;
-    private String nombre;
-    private String segundoNombre;
-    private String apellido;
-    private String segundoApellido;
+    private String nombreCompleto;
+    private String apellidos;
     private String rut;
-    private String dv;
     private String email;
-    private String telefonoCelular;
-    private LocalDate fechaNacimiento;
+    private Integer edad;
     private String numeroRegistroProfesional;
-    private LocalDate egresoProfesional;
-    private Boolean puedeOperar;
     private List<HorarioResponseDto> horarioVeterinario;
 
 }
+/*
+ * private Long id;
+ * private String nombre;
+ * private String segundoNombre;
+ * private String apellido;
+ * private String segundoApellido;
+ * private String rut;
+ * private String dv;
+ * private String email;
+ * private String telefonoCelular;
+ * private LocalDate fechaNacimiento;
+ * private String numeroRegistroProfesional;
+ * private LocalDate egresoProfesional;
+ * private Boolean puedeOperar;
+ * private List<HorarioResponseDto> horarioVeterinario;
+ */
