@@ -1,11 +1,11 @@
+/*
+ * Copyright © 2026 DuocUC FullStack 1
+ * Eduardo Bray
+ * Rodrigo Callealta
+ * Fernando Villalobos
+ */
 package cl.duoc.vets_api.service;
 
-import java.time.LocalDate;
-import java.time.Period;
-
-import java.util.ArrayList;
-import java.util.List;
-import org.springframework.stereotype.Service;
 import cl.duoc.vets_api.dto.request.VeterinarioRequestDto;
 import cl.duoc.vets_api.dto.response.HorarioResponseDto;
 import cl.duoc.vets_api.dto.response.VeterinarioResponseDto;
@@ -13,7 +13,12 @@ import cl.duoc.vets_api.model.Horario;
 import cl.duoc.vets_api.model.Veterinario;
 import cl.duoc.vets_api.repository.HorarioRepository;
 import cl.duoc.vets_api.repository.VeterinarioRepository;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -23,7 +28,7 @@ public class VeterinarioService {
     private final HorarioRepository horarioRepository;
 
     private VeterinarioResponseDto mapToVeterinaroToVeterinarioResponse(Veterinario veterinarioModel) { // 100 años para
-                                                                                                        // esta funcion
+        // esta funcion
         VeterinarioResponseDto veterinarioResponse = new VeterinarioResponseDto();
 
         List<HorarioResponseDto> horarioVeterinarioLista = new ArrayList<>();
@@ -37,7 +42,6 @@ public class VeterinarioService {
             horarioResponse.setHoraFin(horario.getHoraFin());
 
             horarioVeterinarioLista.add(horarioResponse);
-
         }
 
         veterinarioResponse.setId(veterinarioModel.getId());
@@ -46,7 +50,8 @@ public class VeterinarioService {
         veterinarioResponse.setApellidos(veterinarioModel.getApellido() + " " + veterinarioModel.getSegundoApellido());
         veterinarioResponse.setRut(veterinarioModel.getRut() + "-" + veterinarioModel.getDv());
         veterinarioResponse.setEmail(veterinarioModel.getEmail());
-        Integer edad = Period.between(veterinarioModel.getFechaNacimiento(), LocalDate.now()).getYears();
+        Integer edad = Period.between(veterinarioModel.getFechaNacimiento(), LocalDate.now())
+                .getYears();
         veterinarioResponse.setEdad(edad);
         veterinarioResponse.setNumeroRegistroProfesional(veterinarioModel.getNumeroRegistroProfesional());
 
@@ -82,19 +87,19 @@ public class VeterinarioService {
         response = mapToVeterinaroToVeterinarioResponse(veterinario);
 
         return response;
-
     }
 
     public VeterinarioResponseDto ConsultarVeterinarioId(Long veterinarioidId) {
-        Veterinario veterinarioModel = veterinarioRepository.findById(veterinarioidId).orElseThrow();
+        Veterinario veterinarioModel =
+                veterinarioRepository.findById(veterinarioidId).orElseThrow();
         VeterinarioResponseDto response = mapToVeterinaroToVeterinarioResponse(veterinarioModel);
         return response;
-
     }
 
     public VeterinarioResponseDto actualizarVeterinario(Long veterinarioId, VeterinarioRequestDto veterinarioRequest) {
 
-        Veterinario veterinarioModel = veterinarioRepository.findById(veterinarioId).orElseThrow();
+        Veterinario veterinarioModel =
+                veterinarioRepository.findById(veterinarioId).orElseThrow();
         veterinarioModel.setNombre(veterinarioRequest.getNombre());
         veterinarioModel.setSegundoNombre(veterinarioRequest.getSegundoNombre());
         veterinarioModel.setApellido(veterinarioRequest.getApellido());
@@ -111,16 +116,14 @@ public class VeterinarioService {
         VeterinarioResponseDto response = mapToVeterinaroToVeterinarioResponse(veterinarioModel);
 
         return response;
-
     }
 
     public VeterinarioResponseDto eliminarVeterinario(Long veterinarioId) {
 
-        Veterinario veterinarioEliminar = veterinarioRepository.findById(veterinarioId).orElseThrow();
+        Veterinario veterinarioEliminar =
+                veterinarioRepository.findById(veterinarioId).orElseThrow();
         VeterinarioResponseDto response = mapToVeterinaroToVeterinarioResponse(veterinarioEliminar);
         veterinarioRepository.deleteById(veterinarioId);
         return response;
-
     }
-
 }

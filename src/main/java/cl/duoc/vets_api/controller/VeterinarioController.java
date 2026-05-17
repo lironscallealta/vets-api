@@ -1,13 +1,18 @@
+/*
+ * Copyright © 2026 DuocUC FullStack 1
+ * Eduardo Bray
+ * Rodrigo Callealta
+ * Fernando Villalobos
+ */
 package cl.duoc.vets_api.controller;
-
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import cl.duoc.vets_api.dto.request.VeterinarioRequestDto;
 import cl.duoc.vets_api.dto.response.VeterinarioResponseDto;
 import cl.duoc.vets_api.service.VeterinarioService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/vets")
@@ -30,8 +35,8 @@ public class VeterinarioController {
         return ResponseEntity.ok(response);
     }
 
-    public ResponseEntity<VeterinarioResponseDto> actualizarVeterinario(Long id,
-            VeterinarioRequestDto veterinarioRequest) {
+    public ResponseEntity<VeterinarioResponseDto> actualizarVeterinario(
+            Long id, VeterinarioRequestDto veterinarioRequest) {
 
         VeterinarioResponseDto response = veterinarioService.actualizarVeterinario(id, veterinarioRequest);
 
@@ -42,5 +47,4 @@ public class VeterinarioController {
         VeterinarioResponseDto response = veterinarioService.eliminarVeterinario(id);
         return ResponseEntity.ok(response);
     }
-
 }
