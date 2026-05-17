@@ -1,0 +1,10 @@
+-- 1. Insertar Horarios huérfanos (se asignarán a Eduardo y Rodrigo en V3 usando UPDATE)
+INSERT INTO horarios (dia, hora_inicio, hora_fin) VALUES
+('LUNES', '08:00:00', '13:00:00'),      -- ID 1 (para Rodrigo)
+('LUNES', '14:00:00', '19:00:00'),      -- ID 2 (para Rodrigo)
+('MIERCOLES', '08:00:00', '13:00:00'),   -- ID 3 (para Rodrigo)
+('MIERCOLES', '14:00:00', '19:00:00'),   -- ID 4 (para Rodrigo)
+('VIERNES', '08:00:00', '13:00:00'),     -- ID 5 (para Eduardo)
+('VIERNES', '14:00:00', '19:00:00'),     -- ID 6 (para Eduardo)
+('SABADO', '09:00:00', '14:00:00'),      -- ID 7 (para Eduardo)
+('DOMINGO', '10:00:00', '14:00:00');     -- ID 8 (para Eduardo)

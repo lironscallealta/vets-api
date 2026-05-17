@@ -1,32 +1,27 @@
--- 1. Tabla Turnos
-CREATE TABLE turnos (
+-- 1. Tabla Veterinarios
+CREATE TABLE veterinarios (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    horario_turno VARCHAR(12) NOT NULL,
-    hora_inicio TIME,
-    hora_fin TIME
+    pnombre VARCHAR(255) NOT NULL,
+    snombre VARCHAR(255),
+    appaterno VARCHAR(255),
+    apmaterno VARCHAR(255),
+    rut VARCHAR(22),
+    dv VARCHAR(1),
+    email VARCHAR(255) NOT NULL UNIQUE,
+    telefono_celular VARCHAR(20),
+    fecha_nacimiento_vet DATE NOT NULL,
+    registro_profesional VARCHAR(12) NOT NULL UNIQUE,
+    egreso_profesional DATE,
+    opera BOOLEAN
 );
 
 -- 2. Tabla Horarios
 CREATE TABLE horarios (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     dia VARCHAR(255) NOT NULL,
-    id_turno BIGINT,
-    CONSTRAINT fk_horario_turno FOREIGN KEY (id_turno) REFERENCES turnos(id)
+    hora_inicio TIME NOT NULL,
+    hora_fin TIME NOT NULL,
+    veterinario_id BIGINT,
+    CONSTRAINT fk_horario_veterinario FOREIGN KEY (veterinario_id) REFERENCES veterinarios(id)
 );
 
--- 3. Tabla Veterinarios
-CREATE TABLE veterinarios (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    numero_profesional VARCHAR(12) NOT NULL UNIQUE,
-    annio_egreso DATE,
-    cirujano BOOLEAN
-);
-
--- 4. Tabla Intermedia (Veterinarios - Horarios)
-CREATE TABLE veterinarios_horarios (
-    veterinario_id BIGINT NOT NULL,
-    horario_id BIGINT NOT NULL,
-    PRIMARY KEY (veterinario_id, horario_id),
-    CONSTRAINT fk_vh_veterinario FOREIGN KEY (veterinario_id) REFERENCES veterinarios(id),
-    CONSTRAINT fk_vh_horario FOREIGN KEY (horario_id) REFERENCES horarios(id)
-);
