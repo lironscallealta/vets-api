@@ -2,7 +2,6 @@ package cl.duoc.vets_api.service;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.stereotype.Service;
 import cl.duoc.vets_api.dto.request.VeterinarioRequestDto;
 import cl.duoc.vets_api.dto.response.HorarioResponseDto;
@@ -91,21 +90,40 @@ public class VeterinarioService {
     }
 
     public VeterinarioResponseDto ConsultarVeterinarioId(Long veterinarioidId) {
-        Veterinario veterinario = veterinarioRepository.findById(veterinarioidId).orElseThrow();
-        VeterinarioResponseDto response = mapToVeterinaroToVeterinarioResponse(veterinario);
+        Veterinario veterinarioModel = veterinarioRepository.findById(veterinarioidId).orElseThrow();
+        VeterinarioResponseDto response = mapToVeterinaroToVeterinarioResponse(veterinarioModel);
         return response;
 
     }
 
-    public VeterinarioResponseDto actualizarVeterinario() {
+    public VeterinarioResponseDto actualizarVeterinario(Long veterinarioId, VeterinarioRequestDto veterinarioRequest) {
 
-        return null;
+        Veterinario veterinarioModel = veterinarioRepository.findById(veterinarioId).orElseThrow();
+        veterinarioModel.setNombre(veterinarioRequest.getNombre());
+        veterinarioModel.setSegundoNombre(veterinarioRequest.getSegundoNombre());
+        veterinarioModel.setApellido(veterinarioRequest.getApellido());
+        veterinarioModel.setSegundoApellido(veterinarioRequest.getSegundoApellido());
+        veterinarioModel.setRut(veterinarioRequest.getRut());
+        veterinarioModel.setDv(veterinarioRequest.getDv());
+        veterinarioModel.setEmail(veterinarioRequest.getEmail());
+        veterinarioModel.setTelefonoCelular(veterinarioRequest.getTelefonoCelular());
+        veterinarioModel.setFechaNacimiento(veterinarioRequest.getFechaNacimiento());
+        veterinarioModel.setNumeroRegistroProfesional(veterinarioRequest.getNumeroRegistroProfesional());
+        veterinarioModel.setEgresoProfesional(veterinarioRequest.getEgresoProfesional());
+        veterinarioModel.setPuedeOperar(veterinarioRequest.getPuedeOperar());
+
+        VeterinarioResponseDto response = mapToVeterinaroToVeterinarioResponse(veterinarioModel);
+
+        return response;
 
     }
 
-    public VeterinarioResponseDto eliminarVeterinario() {
+    public VeterinarioResponseDto eliminarVeterinario(Long veterinarioId) {
 
-        return null;
+        Veterinario veterinarioEliminar = veterinarioRepository.findById(veterinarioId).orElseThrow();
+        VeterinarioResponseDto response = mapToVeterinaroToVeterinarioResponse(veterinarioEliminar);
+        veterinarioRepository.deleteById(veterinarioId);
+        return response;
 
     }
 
