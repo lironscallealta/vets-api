@@ -58,7 +58,7 @@ public class VeterinarioRequestDto {
     private LocalDate egresoProfesional;
 
     @NotNull
-    private Boolean escirujano;
+    private Boolean puedeOperar;
 
     @NotNull
     private List<Long> horarioVeterinario;

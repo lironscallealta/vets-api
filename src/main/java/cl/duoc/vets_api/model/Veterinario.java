@@ -65,7 +65,7 @@ public class Veterinario {
     private LocalDate egresoProfesional;
 
     @Column(name = "es_cirujano")
-    private Boolean esCirujano;
+    private Boolean puedeOperar;
 
     @OneToMany
     @JoinColumn(name = "veterinario_id")

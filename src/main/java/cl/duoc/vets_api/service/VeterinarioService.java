@@ -53,7 +53,7 @@ public class VeterinarioService {
         veterinarioResponse.setFechaNacimiento(veterinarioModel.getFechaNacimiento());
         veterinarioResponse.setNumeroRegistroProfesional(veterinarioModel.getNumeroRegistroProfesional());
         veterinarioResponse.setEgresoProfesional(veterinarioModel.getEgresoProfesional());
-        veterinarioResponse.setEscirujano(veterinarioModel.getEsCirujano());
+        veterinarioResponse.setPuedeOperar(veterinarioModel.getPuedeOperar());
 
         veterinarioResponse.setHorarioVeterinario(horarioVeterinarioLista);
 
@@ -81,7 +81,7 @@ public class VeterinarioService {
         veterinario.setFechaNacimiento(veterinarioRequest.getFechaNacimiento());
         veterinario.setNumeroRegistroProfesional(veterinarioRequest.getNumeroRegistroProfesional());
         veterinario.setEgresoProfesional(veterinarioRequest.getEgresoProfesional());
-        veterinario.setEsCirujano(veterinarioRequest.getEscirujano());
+        veterinario.setPuedeOperar(veterinarioRequest.getPuedeOperar());
         veterinario.setHorarioVeterinario(horarios);
 
         response = mapToVeterinaroToVeterinarioResponse(veterinario);
@@ -91,7 +91,9 @@ public class VeterinarioService {
     }
 
     public VeterinarioResponseDto ConsultarVeterinarioId(Long veterinarioidId) {
-        return null;
+        Veterinario veterinario = veterinarioRepository.findById(veterinarioidId).orElseThrow();
+        VeterinarioResponseDto response = mapToVeterinaroToVeterinarioResponse(veterinario);
+        return response;
 
     }
 

@@ -24,7 +24,7 @@ public class VeterinarioResponseDto {
     private LocalDate fechaNacimiento;
     private String numeroRegistroProfesional;
     private LocalDate egresoProfesional;
-    private Boolean escirujano;
+    private Boolean puedeOperar;
     private List<HorarioResponseDto> horarioVeterinario;
 
 }
