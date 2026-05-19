@@ -1,11 +1,14 @@
 # Vets-API Dependencies
 
-* **Lombok**
-* **Spring Web**
-* **MySQL Driver**
-* **Validation**
 * **Spring Data JPA**
-* **Spring Boot DevTools**
-* **Spring Reactive Web (WebFlux)**
 * **Flyway Migration**
+* **Validation**
+* **Spring Reactive Web (WebFlux)**
+* **Spring Web**
 * **SpringDoc OpenAPI (Swagger)**
+* **Spring Boot DevTools**
+* **MySQL Driver**
+* **Lombok**
+* **Auth0 Java JWT**
+* **Logstash Logback Encoder**
+* **Spring Security**
