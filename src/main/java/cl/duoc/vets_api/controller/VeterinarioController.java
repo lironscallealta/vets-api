@@ -33,9 +33,9 @@ public class VeterinarioController {
     public ResponseEntity<VeterinarioResponseDto> registrarVeterinario(
             @Valid @RequestBody VeterinarioRequestDto veterinarioRequest) {
 
-        VeterinarioResponseDto response = veterinarioService.registrarVeterinario(veterinarioRequest);
+        VeterinarioResponseDto registrarVeterinario = veterinarioService.registrarVeterinario(veterinarioRequest);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(registrarVeterinario);
     } /*
        *
        * try {
@@ -48,25 +48,25 @@ public class VeterinarioController {
        */
 
     @GetMapping("/{id}")
-    public ResponseEntity<VeterinarioResponseDto> ConsultarVeterinarioId(@PathVariable Long id) {
+    public ResponseEntity<VeterinarioResponseDto> consultarVeterinarioId(@PathVariable Long id) {
 
-        VeterinarioResponseDto response = veterinarioService.ConsultarVeterinarioId(id);
+        VeterinarioResponseDto consultarVeterinarioId = veterinarioService.ConsultarVeterinarioId(id);
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(consultarVeterinarioId);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<VeterinarioResponseDto> actualizarVeterinario(
             @PathVariable Long id, @Valid @RequestBody VeterinarioRequestDto veterinarioRequest) {
 
-        VeterinarioResponseDto response = veterinarioService.actualizarVeterinario(id, veterinarioRequest);
+        VeterinarioResponseDto actualizarVeterinario = veterinarioService.actualizarVeterinario(id, veterinarioRequest);
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(actualizarVeterinario);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<VeterinarioResponseDto> eliminarVeterinario(@PathVariable Long id) {
-        VeterinarioResponseDto response = veterinarioService.eliminarVeterinario(id);
-        return ResponseEntity.ok(response);
+        VeterinarioResponseDto eliminarVeterinario = veterinarioService.eliminarVeterinario(id);
+        return ResponseEntity.ok(eliminarVeterinario);
     }
 }
