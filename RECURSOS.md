@@ -1,44 +1,57 @@
 # Recursos — Vets-API (Veterinarios)
 
-Accesos rápidos para desarrollo local. Los puertos salen de tu archivo `.env` en esta carpeta.
+Guía para **ver y administrar la base de datos** con phpMyAdmin. Los puertos salen de tu `.env`.
 
-## Este microservicio
+## Ver la base de datos (phpMyAdmin)
 
-| Recurso | URL / valor |
-|--------|-------------|
-| **API** | [http://localhost:8092](http://localhost:8092) |
-| **Swagger UI** | [http://localhost:8092/swagger-ui/index.html](http://localhost:8092/swagger-ui/index.html) |
-| **phpMyAdmin** | [http://localhost:8192](http://localhost:8192) |
-| **MySQL (host)** | `localhost` |
-| **MySQL (puerto)** | `3392` |
-| **Base de datos** | `vets` |
-| **Usuario** | `user` |
-
-## Levantar la base de datos (obligatorio antes de la API)
+### 1. Levantar MySQL y phpMyAdmin
 
 Desde la carpeta `vets-api`:
 
 ```bash
-docker compose up db -d
+docker compose up db phpmyadmin -d
 ```
 
-Comprueba que el contenedor `db` está en ejecución (Docker Desktop). La app se conecta a `localhost:3392`.
+### 2. Abrir en el navegador
 
-## Ecosistema completo (los 3 microservicios)
+| Recurso | Enlace |
+|--------|--------|
+| **phpMyAdmin (veterinarios)** | [http://localhost:8192](http://localhost:8192) |
 
-| Microservicio | API | Swagger | phpMyAdmin | MySQL |
-|---------------|-----|---------|------------|-------|
-| **Users** | [8091](http://localhost:8091) | [8091/swagger-ui](http://localhost:8091/swagger-ui/index.html) | [8191](http://localhost:8191) | `3391` → BD `users` |
-| **Pets** | [8090](http://localhost:8090) | [8090/swagger-ui](http://localhost:8090/swagger-ui/index.html) | [8190](http://localhost:8190) | `3390` → BD `pets` |
-| **Vets** | [8092](http://localhost:8092) | [8092/swagger-ui](http://localhost:8092/swagger-ui/index.html) | [8192](http://localhost:8192) | `3392` → BD `vets` |
+### 3. Iniciar sesión
 
-Cada uno usa su propio `docker compose` dentro de su carpeta (`users-api`, `pets-api`, `vets-api`).
+| Campo | Valor |
+|-------|--------|
+| Usuario | `user` |
+| Contraseña | `password` |
+| Base de datos | `vets` |
 
-## Si falla la conexión (`Connection refused` / `Communications link failure`)
+---
 
-1. **MySQL no está corriendo** — Spring/Flyway no encuentran nada en el puerto configurado.
-2. En **vets-api** el puerto es **`3392`** (variable `HOST_DB_PORT` en `.env`), no `3306`.
-3. Solución: `docker compose up db -d` en `vets-api` y esperar ~30 s al healthcheck.
-4. Verifica que exista el archivo `.env` (puedes copiarlo desde `.env.example` y ajustar puertos).
+## Conexión directa a MySQL
 
-Credenciales por defecto en `.env`: usuario `user`, contraseña `password`, root `root_password`.
+| Parámetro | Valor |
+|-----------|--------|
+| Host | `localhost` |
+| Puerto | `3392` |
+| Base de datos | `vets` |
+| Usuario | `user` |
+| Contraseña | `password` |
+
+---
+
+## Las 3 bases del proyecto (phpMyAdmin)
+
+| Microservicio | phpMyAdmin | Puerto MySQL | Base de datos |
+|---------------|------------|--------------|---------------|
+| **Pets** | [http://localhost:8190](http://localhost:8190) | `3390` | `pets` |
+| **Users** | [http://localhost:8191](http://localhost:8191) | `3391` | `users` |
+| **Vets** | [http://localhost:8192](http://localhost:8192) | `3392` | `vets` |
+
+---
+
+## API y Swagger (solo si Spring está corriendo)
+
+| Recurso | Enlace |
+|--------|--------|
+| Swagger | [http://localhost:8092/swagger-ui/index.html](http://localhost:8092/swagger-ui/index.html) |
