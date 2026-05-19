@@ -33,40 +33,25 @@ public class VeterinarioController {
     public ResponseEntity<VeterinarioResponseDto> registrarVeterinario(
             @Valid @RequestBody VeterinarioRequestDto veterinarioRequest) {
 
-        VeterinarioResponseDto registrarVeterinario = veterinarioService.registrarVeterinario(veterinarioRequest);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(registrarVeterinario);
-    } /*
-       *
-       * try {
-       * Fiesta registar = fiestaService.registrarFiesta(nuevaFiesta);
-       * return ResponseEntity.status(HttpStatus.CREATED).body(registar);
-       * } catch (IllegalArgumentException e) {
-       * return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("Error",
-       * "Codigo Existe"));
-       * }
-       */
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(veterinarioService.registrarVeterinario(veterinarioRequest));
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<VeterinarioResponseDto> consultarVeterinarioId(@PathVariable Long id) {
-
-        VeterinarioResponseDto consultarVeterinarioId = veterinarioService.ConsultarVeterinarioId(id);
-
-        return ResponseEntity.ok(consultarVeterinarioId);
+        return ResponseEntity.ok(veterinarioService.consultarVeterinarioId(id));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<VeterinarioResponseDto> actualizarVeterinario(
             @PathVariable Long id, @Valid @RequestBody VeterinarioRequestDto veterinarioRequest) {
 
-        VeterinarioResponseDto actualizarVeterinario = veterinarioService.actualizarVeterinario(id, veterinarioRequest);
-
-        return ResponseEntity.ok(actualizarVeterinario);
+        return ResponseEntity.ok(veterinarioService.actualizarVeterinario(id, veterinarioRequest));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<VeterinarioResponseDto> eliminarVeterinario(@PathVariable Long id) {
-        VeterinarioResponseDto eliminarVeterinario = veterinarioService.eliminarVeterinario(id);
-        return ResponseEntity.ok(eliminarVeterinario);
+    public ResponseEntity<Void> eliminarVeterinario(@PathVariable Long id) {
+        veterinarioService.eliminarVeterinario(id);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -89,13 +90,14 @@ public class VeterinarioService {
         return response;
     }
 
-    public VeterinarioResponseDto ConsultarVeterinarioId(Long veterinarioidId) {
+    public VeterinarioResponseDto consultarVeterinarioId(Long veterinarioidId) {
         Veterinario veterinarioModel =
                 veterinarioRepository.findById(veterinarioidId).orElseThrow();
         VeterinarioResponseDto response = mapToVeterinaroToVeterinarioResponse(veterinarioModel);
         return response;
     }
 
+    @Transactional
     public VeterinarioResponseDto actualizarVeterinario(Long veterinarioId, VeterinarioRequestDto veterinarioRequest) {
 
         Veterinario veterinarioModel =
@@ -118,12 +120,11 @@ public class VeterinarioService {
         return response;
     }
 
-    public VeterinarioResponseDto eliminarVeterinario(Long veterinarioId) {
+    @Transactional
+    public void eliminarVeterinario(Long veterinarioId) {
 
         Veterinario veterinarioEliminar =
                 veterinarioRepository.findById(veterinarioId).orElseThrow();
-        VeterinarioResponseDto response = mapToVeterinaroToVeterinarioResponse(veterinarioEliminar);
-        veterinarioRepository.deleteById(veterinarioId);
-        return response;
+        veterinarioRepository.delete(veterinarioEliminar);
     }
 }
