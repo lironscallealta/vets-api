@@ -9,6 +9,8 @@ package cl.duoc.vets_api.controller;
 import cl.duoc.vets_api.dto.request.VeterinarioRequestDto;
 import cl.duoc.vets_api.dto.response.VeterinarioResponseDto;
 import cl.duoc.vets_api.service.VeterinarioService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,31 +27,34 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/vets")
 @RequiredArgsConstructor
+@Tag(name = "Veterinarios", description = "Operaciones CRUD del dominio veterinarios.")
 public class VeterinarioController {
 
     private final VeterinarioService veterinarioService;
 
     @PostMapping
+    @Operation(summary = "Registrar veterinario", description = "Crea un nuevo registro de veterinario.")
     public ResponseEntity<VeterinarioResponseDto> registrarVeterinario(
             @Valid @RequestBody VeterinarioRequestDto veterinarioRequest) {
-
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(veterinarioService.registrarVeterinario(veterinarioRequest));
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Consultar veterinario por ID", description = "Obtiene un veterinario por su identificador.")
     public ResponseEntity<VeterinarioResponseDto> consultarVeterinarioId(@PathVariable Long id) {
         return ResponseEntity.ok(veterinarioService.consultarVeterinarioId(id));
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Actualizar veterinario", description = "Actualiza los datos de un veterinario existente.")
     public ResponseEntity<VeterinarioResponseDto> actualizarVeterinario(
             @PathVariable Long id, @Valid @RequestBody VeterinarioRequestDto veterinarioRequest) {
-
         return ResponseEntity.ok(veterinarioService.actualizarVeterinario(id, veterinarioRequest));
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Eliminar veterinario", description = "Elimina un veterinario por su identificador.")
     public ResponseEntity<Void> eliminarVeterinario(@PathVariable Long id) {
         veterinarioService.eliminarVeterinario(id);
         return ResponseEntity.noContent().build();

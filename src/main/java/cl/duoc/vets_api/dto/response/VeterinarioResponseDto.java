@@ -26,6 +26,7 @@ public class VeterinarioResponseDto {
     private List<HorarioResponseDto> horarioVeterinario;
 }
 /*
+ * Todos
  * private Long id;
  * private String nombre;
  * private String segundoNombre;
