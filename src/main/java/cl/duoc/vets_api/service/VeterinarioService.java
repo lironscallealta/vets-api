@@ -9,6 +9,7 @@ package cl.duoc.vets_api.service;
 import cl.duoc.vets_api.dto.request.VeterinarioRequestDto;
 import cl.duoc.vets_api.dto.response.HorarioResponseDto;
 import cl.duoc.vets_api.dto.response.VeterinarioResponseDto;
+import cl.duoc.vets_api.exception.BadRequestException;
 import cl.duoc.vets_api.exception.ResourceNotFoundException;
 import cl.duoc.vets_api.model.Horario;
 import cl.duoc.vets_api.model.Veterinario;
@@ -65,13 +66,28 @@ public class VeterinarioService {
     @Transactional
     public VeterinarioResponseDto registrarVeterinario(VeterinarioRequestDto veterinarioRequest) {
 
+        if (veterinarioRequest.getNombre() == null
+                || veterinarioRequest.getNombre().isBlank()) {
+            throw new BadRequestException("El nombre del veterinario es requerido y no puede estar vacío.");
+        }
+        if (veterinarioRequest.getApellido() == null
+                || veterinarioRequest.getApellido().isBlank()) {
+            throw new BadRequestException("El apellido del veterinario es requerido y no puede estar vacío.");
+        }
+        if (veterinarioRequest.getEmail() == null
+                || veterinarioRequest.getEmail().isBlank()) {
+            throw new BadRequestException("El email del veterinario es requerido y no puede estar vacío.");
+        }
+        if (veterinarioRequest.getNumeroRegistroProfesional() == null
+                || veterinarioRequest.getNumeroRegistroProfesional().isBlank()) {
+            throw new BadRequestException("El número de registro profesional es requerido y no puede estar vacío.");
+        }
+
         Veterinario veterinario = new Veterinario();
 
         VeterinarioResponseDto response = new VeterinarioResponseDto();
 
         List<Horario> horarios = horarioRepository.findAllById(veterinarioRequest.getHorarioVeterinario());
-
-        // me falta el error aca
 
         veterinario.setNombre(veterinarioRequest.getNombre());
         veterinario.setSegundoNombre(veterinarioRequest.getSegundoNombre());
