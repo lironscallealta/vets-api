@@ -9,6 +9,7 @@ package cl.duoc.vets_api.service;
 import cl.duoc.vets_api.dto.request.VeterinarioRequestDto;
 import cl.duoc.vets_api.dto.response.HorarioResponseDto;
 import cl.duoc.vets_api.dto.response.VeterinarioResponseDto;
+import cl.duoc.vets_api.exception.ResourceNotFoundException;
 import cl.duoc.vets_api.model.Horario;
 import cl.duoc.vets_api.model.Veterinario;
 import cl.duoc.vets_api.repository.HorarioRepository;
@@ -61,6 +62,7 @@ public class VeterinarioService {
         return veterinarioResponse;
     }
 
+    @Transactional
     public VeterinarioResponseDto registrarVeterinario(VeterinarioRequestDto veterinarioRequest) {
 
         Veterinario veterinario = new Veterinario();
@@ -85,14 +87,17 @@ public class VeterinarioService {
         veterinario.setPuedeOperar(veterinarioRequest.getPuedeOperar());
         veterinario.setHorarioVeterinario(horarios);
 
-        response = mapToVeterinaroToVeterinarioResponse(veterinario);
+        Veterinario veterinarioGuardado = veterinarioRepository.save(veterinario);
+        response = mapToVeterinaroToVeterinarioResponse(veterinarioGuardado);
 
         return response;
     }
 
     public VeterinarioResponseDto consultarVeterinarioId(Long veterinarioidId) {
-        Veterinario veterinarioModel =
-                veterinarioRepository.findById(veterinarioidId).orElseThrow();
+        Veterinario veterinarioModel = veterinarioRepository
+                .findById(veterinarioidId)
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("no se encontro veterinario con id " + veterinarioidId));
         VeterinarioResponseDto response = mapToVeterinaroToVeterinarioResponse(veterinarioModel);
         return response;
     }
@@ -100,8 +105,10 @@ public class VeterinarioService {
     @Transactional
     public VeterinarioResponseDto actualizarVeterinario(Long veterinarioId, VeterinarioRequestDto veterinarioRequest) {
 
-        Veterinario veterinarioModel =
-                veterinarioRepository.findById(veterinarioId).orElseThrow();
+        Veterinario veterinarioModel = veterinarioRepository
+                .findById(veterinarioId)
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("no se encontro veterinario con id: " + veterinarioId));
         veterinarioModel.setNombre(veterinarioRequest.getNombre());
         veterinarioModel.setSegundoNombre(veterinarioRequest.getSegundoNombre());
         veterinarioModel.setApellido(veterinarioRequest.getApellido());
@@ -123,8 +130,10 @@ public class VeterinarioService {
     @Transactional
     public void eliminarVeterinario(Long veterinarioId) {
 
-        Veterinario veterinarioEliminar =
-                veterinarioRepository.findById(veterinarioId).orElseThrow();
+        Veterinario veterinarioEliminar = veterinarioRepository
+                .findById(veterinarioId)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "no se puede eliminar porque no existe el veterinario con id: " + veterinarioId));
         veterinarioRepository.delete(veterinarioEliminar);
     }
 }
