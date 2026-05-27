@@ -155,4 +155,10 @@ public class VeterinarioService {
                         "no se puede eliminar porque no existe el veterinario con id: " + veterinarioId));
         veterinarioRepository.delete(veterinarioEliminar);
     }
+
+    public List<VeterinarioResponseDto> buscarTodos() {
+        return veterinarioRepository.findAll().stream()
+                .map(this::mapToVeterinaroToVeterinarioResponse)
+                .toList();
+    }
 }

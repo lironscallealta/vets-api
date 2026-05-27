@@ -12,6 +12,7 @@ import cl.duoc.vets_api.service.VeterinarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +39,12 @@ public class VeterinarioController {
             @Valid @RequestBody VeterinarioRequestDto veterinarioRequest) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(veterinarioService.registrarVeterinario(veterinarioRequest));
+    }
+
+    @GetMapping
+    @Operation(summary = "Todos los veterinarios", description = "Obtiene una lista con todos los veterinarios")
+    public ResponseEntity<List<VeterinarioResponseDto>> buscarTodos() {
+        return ResponseEntity.ok(veterinarioService.buscarTodos());
     }
 
     @GetMapping("/{id}")
