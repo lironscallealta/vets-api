@@ -8,9 +8,11 @@ package cl.duoc.vets_api.service;
 
 import cl.duoc.vets_api.dto.request.VeterinarioRequestDto;
 import cl.duoc.vets_api.dto.response.HorarioResponseDto;
+import cl.duoc.vets_api.dto.response.VetScheduleResponse;
 import cl.duoc.vets_api.dto.response.VeterinarioResponseDto;
 import cl.duoc.vets_api.exception.BadRequestException;
 import cl.duoc.vets_api.exception.ResourceNotFoundException;
+import cl.duoc.vets_api.model.DiasSemana;
 import cl.duoc.vets_api.model.Horario;
 import cl.duoc.vets_api.model.Veterinario;
 import cl.duoc.vets_api.repository.HorarioRepository;
@@ -64,6 +66,18 @@ public class VeterinarioService {
         veterinarioResponse.setHorarioVeterinario(horarioVeterinarioLista);
 
         return veterinarioResponse;
+    }
+
+    private static DiasSemana toDiasSemana(LocalDate fecha) {
+        return switch (fecha.getDayOfWeek()) {
+            case MONDAY -> DiasSemana.LUNES;
+            case TUESDAY -> DiasSemana.MARTES;
+            case WEDNESDAY -> DiasSemana.MIERCOLES;
+            case THURSDAY -> DiasSemana.JUEVES;
+            case FRIDAY -> DiasSemana.VIERNES;
+            case SATURDAY -> DiasSemana.SABADO;
+            case SUNDAY -> DiasSemana.DOMINGO;
+        };
     }
 
     @Transactional
@@ -160,6 +174,16 @@ public class VeterinarioService {
     public List<VeterinarioResponseDto> buscarTodos() {
         return veterinarioRepository.findAll().stream()
                 .map(this::mapVeterinaroToVeterinarioResponse)
+                .toList();
+    }
+
+    public List<VetScheduleResponse> consultarHorariosPorDia(LocalDate req) {
+        DiasSemana dia = toDiasSemana(req);
+        return veterinarioRepository.findAll().stream()
+                .flatMap(vet -> vet.getHorarioVeterinario().stream()
+                        .filter(horario -> horario.getDia().equals(dia))
+                        .map(horario ->
+                                new VetScheduleResponse(vet.getId(), horario.getHoraInicio(), horario.getHoraFin())))
                 .toList();
     }
 }
