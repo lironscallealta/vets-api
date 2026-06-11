@@ -32,7 +32,7 @@ public class VeterinarioService {
     private final VeterinarioRepository veterinarioRepository;
     private final HorarioRepository horarioRepository;
 
-    private VeterinarioResponseDto mapToVeterinaroToVeterinarioResponse(Veterinario veterinarioModel) { // 100 años para
+    private VeterinarioResponseDto mapVeterinaroToVeterinarioResponse(Veterinario veterinarioModel) { // 100 años para
         // esta funcion
         VeterinarioResponseDto veterinarioResponse = new VeterinarioResponseDto();
 
@@ -107,7 +107,7 @@ public class VeterinarioService {
         veterinario.setHorarioVeterinario(horarios);
 
         Veterinario veterinarioGuardado = veterinarioRepository.save(veterinario);
-        response = mapToVeterinaroToVeterinarioResponse(veterinarioGuardado);
+        response = mapVeterinaroToVeterinarioResponse(veterinarioGuardado);
 
         return response;
     }
@@ -117,7 +117,7 @@ public class VeterinarioService {
                 .findById(veterinarioidId)
                 .orElseThrow(
                         () -> new ResourceNotFoundException("no se encontro veterinario con id " + veterinarioidId));
-        VeterinarioResponseDto response = mapToVeterinaroToVeterinarioResponse(veterinarioModel);
+        VeterinarioResponseDto response = mapVeterinaroToVeterinarioResponse(veterinarioModel);
         return response;
     }
 
@@ -141,7 +141,7 @@ public class VeterinarioService {
         veterinarioModel.setEgresoProfesional(veterinarioRequest.getEgresoProfesional());
         veterinarioModel.setPuedeOperar(veterinarioRequest.getPuedeOperar());
 
-        VeterinarioResponseDto response = mapToVeterinaroToVeterinarioResponse(veterinarioModel);
+        VeterinarioResponseDto response = mapVeterinaroToVeterinarioResponse(veterinarioModel);
 
         return response;
     }
@@ -158,7 +158,7 @@ public class VeterinarioService {
 
     public List<VeterinarioResponseDto> buscarTodos() {
         return veterinarioRepository.findAll().stream()
-                .map(this::mapToVeterinaroToVeterinarioResponse)
+                .map(this::mapVeterinaroToVeterinarioResponse)
                 .toList();
     }
 }
