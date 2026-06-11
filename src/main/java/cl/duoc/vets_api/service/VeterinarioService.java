@@ -43,6 +43,7 @@ public class VeterinarioService {
             HorarioResponseDto horarioResponse = new HorarioResponseDto();
 
             horarioResponse.setId(horario.getId());
+            horarioResponse.setDia(horario.getDia());
             horarioResponse.setHoraInicio(horario.getHoraInicio());
             horarioResponse.setHoraFin(horario.getHoraFin());
 
