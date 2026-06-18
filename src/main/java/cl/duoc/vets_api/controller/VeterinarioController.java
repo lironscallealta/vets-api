@@ -40,7 +40,7 @@ public class VeterinarioController {
     @GetMapping("/schedules")
     @Operation(
             summary = "Consular horas de todos los veterinarios por fecha",
-            description = "Retorna la el horario de trabajo de todos los veterinarios para una fecha")
+            description = "Retorna el horario de trabajo de todos los veterinarios para una fecha")
     public ResponseEntity<List<VetScheduleResponse>> getAllSchedulesByDate(
             @RequestParam(name = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateReq) {
         return ResponseEntity.ok(veterinarioService.consultarHorariosPorDia(dateReq));
