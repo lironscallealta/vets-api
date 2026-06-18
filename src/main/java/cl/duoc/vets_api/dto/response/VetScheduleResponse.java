@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class VetScheduleResponse {
     private Long vetId;
+    private String vetNombre;
     private LocalTime horaInicio;
     private LocalTime horaFin;
 }

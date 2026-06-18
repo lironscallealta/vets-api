@@ -182,8 +182,16 @@ public class VeterinarioService {
         return veterinarioRepository.findAll().stream()
                 .flatMap(vet -> vet.getHorarioVeterinario().stream()
                         .filter(horario -> horario.getDia().equals(dia))
-                        .map(horario ->
-                                new VetScheduleResponse(vet.getId(), horario.getHoraInicio(), horario.getHoraFin())))
+                        .map(horario -> new VetScheduleResponse(
+                                vet.getId(),
+                                generarNombreCompleto(vet),
+                                horario.getHoraInicio(),
+                                horario.getHoraFin())))
                 .toList();
+    }
+
+    private String generarNombreCompleto(Veterinario vet) {
+        return vet.getNombre() + " " + vet.getSegundoNombre() + " " + vet.getApellido() + " "
+                + vet.getSegundoApellido();
     }
 }
