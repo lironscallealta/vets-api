@@ -8,6 +8,7 @@ package cl.duoc.vets_api.controller;
 
 import cl.duoc.vets_api.dto.DtoApiError;
 import cl.duoc.vets_api.dto.request.VeterinarioRequestDto;
+import cl.duoc.vets_api.dto.response.VetScheduleResponse;
 import cl.duoc.vets_api.dto.response.VeterinarioResponseDto;
 import cl.duoc.vets_api.service.VeterinarioService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,8 +19,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,6 +32,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -38,6 +42,25 @@ import org.springframework.web.bind.annotation.RestController;
 public class VeterinarioController {
 
     private final VeterinarioService veterinarioService;
+
+    @GetMapping("/schedules")
+    @Operation(
+            summary = "Consultar horarios de todos los veterinarios por fecha",
+            description = "Retorna el horario de trabajo de todos los veterinarios para una fecha")
+    @ApiResponses({
+        @ApiResponse(
+                responseCode = "200",
+                description = "Horarios obtenidos correctamente",
+                content = @Content(mediaType = "application/json")),
+        @ApiResponse(
+                responseCode = "401",
+                description = "Token JWT ausente o inválido",
+                content = @Content(schema = @Schema(implementation = DtoApiError.class)))
+    })
+    public ResponseEntity<List<VetScheduleResponse>> getAllSchedulesByDate(
+            @RequestParam(name = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateReq) {
+        return ResponseEntity.ok(veterinarioService.consultarHorariosPorDia(dateReq));
+    }
 
     @PostMapping
     @Operation(summary = "Registrar veterinario", description = "Crea un nuevo registro de veterinario.")

@@ -8,9 +8,11 @@ package cl.duoc.vets_api.service;
 
 import cl.duoc.vets_api.dto.request.VeterinarioRequestDto;
 import cl.duoc.vets_api.dto.response.HorarioResponseDto;
+import cl.duoc.vets_api.dto.response.VetScheduleResponse;
 import cl.duoc.vets_api.dto.response.VeterinarioResponseDto;
 import cl.duoc.vets_api.exception.BadRequestException;
 import cl.duoc.vets_api.exception.ResourceNotFoundException;
+import cl.duoc.vets_api.model.DiasSemana;
 import cl.duoc.vets_api.model.Horario;
 import cl.duoc.vets_api.model.Veterinario;
 import cl.duoc.vets_api.repository.HorarioRepository;
@@ -32,7 +34,7 @@ public class VeterinarioService {
     private final VeterinarioRepository veterinarioRepository;
     private final HorarioRepository horarioRepository;
 
-    private VeterinarioResponseDto mapToVeterinaroToVeterinarioResponse(Veterinario veterinarioModel) { // 100 años para
+    private VeterinarioResponseDto mapVeterinaroToVeterinarioResponse(Veterinario veterinarioModel) { // 100 años para
         // esta funcion
         VeterinarioResponseDto veterinarioResponse = new VeterinarioResponseDto();
 
@@ -43,6 +45,7 @@ public class VeterinarioService {
             HorarioResponseDto horarioResponse = new HorarioResponseDto();
 
             horarioResponse.setId(horario.getId());
+            horarioResponse.setDia(horario.getDia());
             horarioResponse.setHoraInicio(horario.getHoraInicio());
             horarioResponse.setHoraFin(horario.getHoraFin());
 
@@ -63,6 +66,18 @@ public class VeterinarioService {
         veterinarioResponse.setHorarioVeterinario(horarioVeterinarioLista);
 
         return veterinarioResponse;
+    }
+
+    private static DiasSemana toDiasSemana(LocalDate fecha) {
+        return switch (fecha.getDayOfWeek()) {
+            case MONDAY -> DiasSemana.LUNES;
+            case TUESDAY -> DiasSemana.MARTES;
+            case WEDNESDAY -> DiasSemana.MIERCOLES;
+            case THURSDAY -> DiasSemana.JUEVES;
+            case FRIDAY -> DiasSemana.VIERNES;
+            case SATURDAY -> DiasSemana.SABADO;
+            case SUNDAY -> DiasSemana.DOMINGO;
+        };
     }
 
     @Transactional
@@ -107,7 +122,7 @@ public class VeterinarioService {
         veterinario.setHorarioVeterinario(horarios);
 
         Veterinario veterinarioGuardado = veterinarioRepository.save(veterinario);
-        response = mapToVeterinaroToVeterinarioResponse(veterinarioGuardado);
+        response = mapVeterinaroToVeterinarioResponse(veterinarioGuardado);
 
         return response;
     }
@@ -117,7 +132,7 @@ public class VeterinarioService {
                 .findById(veterinarioidId)
                 .orElseThrow(
                         () -> new ResourceNotFoundException("no se encontro veterinario con id " + veterinarioidId));
-        VeterinarioResponseDto response = mapToVeterinaroToVeterinarioResponse(veterinarioModel);
+        VeterinarioResponseDto response = mapVeterinaroToVeterinarioResponse(veterinarioModel);
         return response;
     }
 
@@ -141,7 +156,7 @@ public class VeterinarioService {
         veterinarioModel.setEgresoProfesional(veterinarioRequest.getEgresoProfesional());
         veterinarioModel.setPuedeOperar(veterinarioRequest.getPuedeOperar());
 
-        VeterinarioResponseDto response = mapToVeterinaroToVeterinarioResponse(veterinarioModel);
+        VeterinarioResponseDto response = mapVeterinaroToVeterinarioResponse(veterinarioModel);
 
         return response;
     }
@@ -158,7 +173,25 @@ public class VeterinarioService {
 
     public List<VeterinarioResponseDto> buscarTodos() {
         return veterinarioRepository.findAll().stream()
-                .map(this::mapToVeterinaroToVeterinarioResponse)
+                .map(this::mapVeterinaroToVeterinarioResponse)
                 .toList();
+    }
+
+    public List<VetScheduleResponse> consultarHorariosPorDia(LocalDate req) {
+        DiasSemana dia = toDiasSemana(req);
+        return veterinarioRepository.findAll().stream()
+                .flatMap(vet -> vet.getHorarioVeterinario().stream()
+                        .filter(horario -> horario.getDia().equals(dia))
+                        .map(horario -> new VetScheduleResponse(
+                                vet.getId(),
+                                generarNombreCompleto(vet),
+                                horario.getHoraInicio(),
+                                horario.getHoraFin())))
+                .toList();
+    }
+
+    private String generarNombreCompleto(Veterinario vet) {
+        return vet.getNombre() + " " + vet.getSegundoNombre() + " " + vet.getApellido() + " "
+                + vet.getSegundoApellido();
     }
 }
