@@ -113,6 +113,28 @@ class VeterinarioServiceTest {
     }
 
     @Test
+    void buscarTodosDebeRetornarListaMapeada() {
+        when(veterinarioRepository.findAll()).thenReturn(List.of(crearVeterinario(1L), crearVeterinario(2L)));
+
+        List<VeterinarioResponseDto> resultado = veterinarioService.buscarTodos();
+
+        assertThat(resultado).hasSize(2);
+        assertThat(resultado.get(0).getEmail()).isEqualTo("ana.gonzalez@vet.cl");
+    }
+
+    @Test
+    void actualizarVeterinarioDebeRetornarResponseCuandoExiste() {
+        Veterinario existente = crearVeterinario(4L);
+        request.setEmail("nuevo.email@vet.cl");
+        when(veterinarioRepository.findById(4L)).thenReturn(Optional.of(existente));
+
+        VeterinarioResponseDto resultado = veterinarioService.actualizarVeterinario(4L, request);
+
+        assertThat(resultado.getEmail()).isEqualTo("nuevo.email@vet.cl");
+        assertThat(existente.getEmail()).isEqualTo("nuevo.email@vet.cl");
+    }
+
+    @Test
     void eliminarVeterinarioDebeEliminarCuandoExiste() {
         Veterinario veterinario = crearVeterinario(3L);
         when(veterinarioRepository.findById(3L)).thenReturn(Optional.of(veterinario));
@@ -120,6 +142,14 @@ class VeterinarioServiceTest {
         veterinarioService.eliminarVeterinario(3L);
 
         verify(veterinarioRepository).delete(veterinario);
+    }
+
+    @Test
+    void eliminarVeterinarioDebeLanzarNotFoundCuandoNoExiste() {
+        when(veterinarioRepository.findById(99L)).thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> veterinarioService.eliminarVeterinario(99L))
+                .isInstanceOf(ResourceNotFoundException.class);
     }
 
     private Veterinario crearVeterinario(Long id) {

@@ -8,12 +8,14 @@ package cl.duoc.vets_api.controller;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -106,10 +108,48 @@ class VeterinarioControllerTest {
     }
 
     @Test
+    void buscarTodosDebeRetornar200() throws Exception {
+        VeterinarioResponseDto response = new VeterinarioResponseDto(
+                1L, "Ana María", "González Pérez", "12345678-9", "ana.gonzalez@vet.cl", 36, "VET-123456", List.of());
+
+        when(veterinarioService.buscarTodos()).thenReturn(List.of(response));
+
+        mockMvc.perform(get("/api/v1/vets"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].email").value("ana.gonzalez@vet.cl"));
+    }
+
+    @Test
+    void actualizarVeterinarioDebeRetornar200CuandoExiste() throws Exception {
+        VeterinarioRequestDto request = crearRequestValido();
+        request.setEmail("ana.actualizada@vet.cl");
+        VeterinarioResponseDto response = new VeterinarioResponseDto(
+                1L, "Ana María", "González Pérez", "12345678-9", "ana.actualizada@vet.cl", 36, "VET-123456", List.of());
+
+        when(veterinarioService.actualizarVeterinario(eq(1L), any(VeterinarioRequestDto.class)))
+                .thenReturn(response);
+
+        mockMvc.perform(put("/api/v1/vets/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonMapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.email").value("ana.actualizada@vet.cl"));
+    }
+
+    @Test
     void eliminarVeterinarioDebeRetornar204() throws Exception {
         mockMvc.perform(delete("/api/v1/vets/1")).andExpect(status().isNoContent());
 
         verify(veterinarioService).eliminarVeterinario(eq(1L));
+    }
+
+    @Test
+    void eliminarVeterinarioDebeRetornar404CuandoNoExiste() throws Exception {
+        doThrow(new ResourceNotFoundException("no se puede eliminar porque no existe el veterinario con id: 99"))
+                .when(veterinarioService)
+                .eliminarVeterinario(99L);
+
+        mockMvc.perform(delete("/api/v1/vets/99")).andExpect(status().isNotFound());
     }
 
     private VeterinarioRequestDto crearRequestValido() {
