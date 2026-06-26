@@ -50,7 +50,7 @@ public class DataLoader implements CommandLineRunner {
             veterinario.setEmail(faker.internet().emailAddress());
             veterinario.setTelefonoCelular("+569" + faker.number().digits(8));
             veterinario.setFechaNacimiento(faker.timeAndDate().birthday(25, 55));
-            veterinario.setNumeroRegistroProfesional("REG-FAKE-" + (2000 + i));
+            veterinario.setNumeroRegistroProfesional("MockId-" + String.valueOf(i));
             veterinario.setEgresoProfesional(
                     LocalDate.now().minusYears(ThreadLocalRandom.current().nextInt(1, 10)));
             veterinario.setPuedeOperar(faker.bool().bool());
