@@ -6,13 +6,10 @@
  */
 package cl.duoc.vets_api.dataloader;
 
-import cl.duoc.vets_api.model.DiasSemana;
-import cl.duoc.vets_api.model.Horario;
 import cl.duoc.vets_api.model.Veterinario;
+import cl.duoc.vets_api.repository.HorarioRepository;
 import cl.duoc.vets_api.repository.VeterinarioRepository;
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +27,7 @@ public class DataLoader implements CommandLineRunner {
     private static final int VETERINARIOS_FAKE = 10;
 
     private final VeterinarioRepository veterinarioRepository;
+    private final HorarioRepository horarioRepository;
 
     @Override
     public void run(String... args) {
@@ -54,23 +52,8 @@ public class DataLoader implements CommandLineRunner {
             veterinario.setEgresoProfesional(
                     LocalDate.now().minusYears(ThreadLocalRandom.current().nextInt(1, 10)));
             veterinario.setPuedeOperar(faker.bool().bool());
-            veterinario.setHorarioVeterinario(crearHorarios());
+            veterinario.setHorarioVeterinario(horarioRepository.findAllById(List.of(1L, 2L + (i % 6))));
             veterinarioRepository.save(veterinario);
         }
-    }
-
-    private List<Horario> crearHorarios() {
-        List<Horario> horarios = new ArrayList<>();
-        DiasSemana[] dias = DiasSemana.values();
-
-        for (int i = 0; i < 2; i++) {
-            Horario horario = new Horario();
-            horario.setDia(dias[ThreadLocalRandom.current().nextInt(dias.length)]);
-            horario.setHoraInicio(LocalTime.of(8 + (i * 6), 0));
-            horario.setHoraFin(LocalTime.of(13 + (i * 6), 0));
-            horarios.add(horario);
-        }
-
-        return horarios;
     }
 }
